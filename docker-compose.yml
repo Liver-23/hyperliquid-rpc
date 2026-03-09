@@ -11,8 +11,10 @@ services:
         CHAIN: Mainnet
     image: hyperliquid-node:mainnet
     ports:
-      - "4001-4002:4001-4002"   # gossip (required for p2p)
-      - "3001:3001"             # EVM RPC + Info API
+      # Gossip: must be reachable from other peers (0.0.0.0). Do not bind to 127.0.0.1 only.
+      - "4001-4002:4001-4002"
+      # RPC: localhost-only by default. Use "3001:3001" to allow access from other machines.
+      - "127.0.0.1:3001:3001"
     environment:
       CHAIN: Mainnet
       # Required for Mainnet: at least one seed peer (comma-separated). More peers = better chance to sync.
